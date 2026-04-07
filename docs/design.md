@@ -209,6 +209,16 @@ ansible_incus_project: ezpodman-sandbox
 The connection plugin reuses that config — no need to store cert paths in
 Ansible variables.
 
+**Local execution:** If you run Ansible directly on the Incus host (no separate
+control node), pass `incus_remote=local`. `local` is a built-in Incus remote
+that points to the local daemon — no TLS setup required. Every CLI command and
+the connection plugin handle it identically to a named remote:
+
+```bash
+# Running ansible-playbook on the Incus host itself:
+ansible-playbook playbooks/provision.yml -e "incus_remote=local"
+```
+
 **`provision.yml` is different:** It runs on `localhost` and uses the `incus`
 CLI directly via `ansible.builtin.command`. This is because `provision.yml`
 creates the VMs — the VMs don't exist yet, so the connection plugin has nothing
@@ -256,7 +266,11 @@ Overrides everything. Used to change the target remote or storage pool without
 editing any file:
 
 ```bash
+# Named remote (control node → Incus server over TLS):
 ansible-playbook provision.yml -e "incus_remote=<remote>"
+
+# Local Incus daemon (running directly on the Incus host):
+ansible-playbook provision.yml -e "incus_remote=local"
 ```
 
 ---
@@ -268,7 +282,8 @@ ansible-playbook provision.yml -e "incus_remote=<remote>"
 **Used by:** `provision.yml`
 
 **What it does:**
-1. Verifies the named remote (`<remote>`) is configured on your control node
+1. Verifies the target remote is reachable — either a named remote configured
+   on your control node, or `local` when running directly on the Incus host
 2. Creates the `ezpodman-sandbox` Incus project if it doesn't exist
 3. Launches both VMs if they don't exist
 4. Waits until both VMs respond to `incus exec`

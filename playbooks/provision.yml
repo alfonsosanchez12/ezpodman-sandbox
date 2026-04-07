@@ -42,6 +42,7 @@
         fail_msg: |
           'incus_remote' is not set. Pass it explicitly:
             ansible-playbook playbooks/provision.yml -e "incus_remote=<remote>"
+            # local Incus daemon: -e "incus_remote=local"
           Available remotes: incus remote list
 
   roles:

@@ -37,7 +37,11 @@ ansible-galaxy collection install community.general containers.podman
 Verify the target remote is reachable:
 
 ```bash
+# Named remote (control node → Incus server over TLS):
 incus project list <remote>:
+
+# Local Incus daemon (running directly on the Incus host):
+incus project list local:
 ```
 
 ---

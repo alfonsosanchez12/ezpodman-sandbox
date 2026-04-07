@@ -4,7 +4,11 @@
 # 'incus_remote' selects which Incus server to target. It has no default —
 # you must pass it explicitly on every run:
 #
+#   # Named remote (running Ansible from a separate control node):
 #   ansible-playbook playbooks/provision.yml -e "incus_remote=<remote>"
+#
+#   # Local Incus daemon (running Ansible directly on the Incus host):
+#   ansible-playbook playbooks/provision.yml -e "incus_remote=local"
 #
 # See available remotes: incus remote list
 # Add a new remote:      incus remote add <remote> https://<your-server>:8443 --accept-certificate

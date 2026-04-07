@@ -41,6 +41,7 @@
         fail_msg: |
           'incus_remote' is not set. Pass it explicitly:
             ansible-playbook playbooks/setup.yml -e "incus_remote=<remote>"
+            # local Incus daemon: -e "incus_remote=local"
           Available remotes: incus remote list
       run_once: true   # one check is enough — no need to assert on every VM
 
